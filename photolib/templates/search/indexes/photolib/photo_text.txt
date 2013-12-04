@@ -1,0 +1,12 @@
+{{ object.filename }}
+
+{{ object.tags_str }}
+{{ object.tags_str }}
+
+{{ object.alt }}
+
+{{ object.caption }}
+
+{{ object.credits }} {{ object.source }}
+
+{{ object.notes }}

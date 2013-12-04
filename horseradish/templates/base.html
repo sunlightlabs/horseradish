@@ -1,0 +1,42 @@
+{% load staticfiles %}
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>Horseradish</title>
+		<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+		<style>
+			h1 { margin: 0 0 1em 0; }
+			.nav-tabs { margin-bottom: 1em; }
+			.the-image { display: block; margin-bottom: 3em; max-width: 100%; }
+			.the-textarea { border: 0; border-radius: 3px; height: 200px; width: 100%; }
+			.img-controls { text-align: right; margin-bottom: 1em; }
+			.photo-list img { margin-bottom: 0.3em; }
+			.paginator { text-align: center; }
+			div[role=main] { margin-bottom: 30px; }
+		</style>
+	</head>
+	<body>
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/"><span class="glyphicon glyphicon-picture"></span> Horseradish</a>
+			</div>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="{% url 'photolib.image_upload' %}"><span class="glyphicon glyphicon-cloud-upload"></span> Upload</a></li>
+				<li>
+					<form class="navbar-form" role="search" action="/search/" method="get">
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="Search" name="q" value="{% if query %}{{ query }}{% endif %}">
+						</div>
+						<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+					</form>
+				</li>
+			</ul>
+		</nav>
+		<div role="main" class="container">
+			{% block content %}{% endblock %}
+		</div>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script src="{% static 'js/bootstrap.min.js' %}"></script>
+		{% block js %}{% endblock %}
+	</body>
+</html>

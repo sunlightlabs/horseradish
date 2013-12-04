@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<div class="jumbotron">
+    	<p style="text-align: center; color: #999; margin: 4em 0;">Drop an image here to upload</p>
+    </div>
+    <div class="row">
+    	<div class="col-md-12">
+    		<p>Or select a file the old fashioned way</p>
+	    	<form role="form" class="form-inline" action="." method="post" enctype="multipart/form-data">
+	    		{% csrf_token %}
+	    		<div class="form-group">
+	    			<label class="sr-only" for="field_image">File input</label>
+	    			<input type="file" id="field_image" name="image">
+	  			</div>
+	  			<button type="submit" class="btn btn-primary">Upload</button>
+	    	</form>
+	    </div>
+	</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% load pagination_tags %}
+
+{% block content %}
+	{% if query %}
+		<h1>Results for <em>{{ query }}</em></h1>
+	{% elif tag %}
+		<h1>Photos tagged <em>{{ tag }}</em></h1>
+	{% else %}
+		<h1>Photos</h1>
+	{% endif %}
+	<div class="row photo-list">
+		<div class="col-md-12">
+			{% for photo in photo_list %}
+				<a href="{% url 'photolib.image_detail' photo.uuid %}">
+					<img data-src="{{ photo.image_thumbnail.url }}" alt="{{ photo.alt }}" src="{{ photo.image_thumbnail.url }}" class="img-thumbnail">
+				</a>
+			{% endfor %}
+		</div>
+	</div>
+
+	<div class="paginator">
+		{% paginate %}
+	</div>
+
+{% endblock %}

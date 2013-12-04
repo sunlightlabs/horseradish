@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if query %}
+        <h1>Results for <em>{{ query }}</em></h1>
+    {% else %}
+        <h1>Recent images</h1>
+    {% endif %}
+    <div class="row">
+        <div class="col-md-12">
+            {% for photo in page.object_list %}
+                <a href="{% url 'photolib.image_detail' photo.uuid %}">
+                    <img data-src="{{ photo.thumbnail_url }}" alt="{{ photo.alt }}" src="{{ photo.thumbnail_url }}" class="img-thumbnail">
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

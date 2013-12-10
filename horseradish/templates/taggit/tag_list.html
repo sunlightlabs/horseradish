@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+	<div class="row">
+		<div class="col-md-12">
+			<h1>Tags</h1>
+			<div class="tag-list">
+				<ul>
+				    {% for tag in tag_list %}
+				    	<li><a href="{% url 'photolib.tagged_list' tag.slug %}">{{ tag }}</a></li>
+				    {% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

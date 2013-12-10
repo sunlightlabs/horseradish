@@ -40,6 +40,13 @@ class ImageUploadView(CreateView):
 
 
 class TagListView(ListView):
+    model = Tag
+
+    def get_queryset(self):
+        return self.model.objects.order_by('name')
+
+
+class TaggedImageListView(ListView):
     model = Photo
     paginate_by = PHOTOS_PER_PAGE
 
@@ -49,7 +56,7 @@ class TagListView(ListView):
 
     def get_context_data(self):
         slug = self.kwargs.get('slug', '').lower()
-        context = super(TagListView, self).get_context_data()
+        context = super(TaggedImageListView, self).get_context_data()
         if slug:
             try:
                 tag = Tag.objects.get(slug=slug)

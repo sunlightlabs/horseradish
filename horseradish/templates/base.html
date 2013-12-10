@@ -13,6 +13,11 @@
 			.photo-list img { margin-bottom: 0.3em; }
 			.paginator { text-align: center; }
 			div[role=main] { margin-bottom: 30px; }
+			.tag-list {
+				-webkit-column-count: 6;
+				   -moz-column-count: 6;
+				        column-count: 6;
+			}
 		</style>
 	</head>
 	<body>
@@ -21,7 +26,8 @@
 				<a class="navbar-brand" href="/"><span class="glyphicon glyphicon-picture"></span> Horseradish</a>
 			</div>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="{% url 'photolib.image_upload' %}"><span class="glyphicon glyphicon-cloud-upload"></span> Upload</a></li>
+				<li><a href="{% url 'photolib.tag_list' %}"><span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;Tags</a></li>
+				<li><a href="{% url 'photolib.image_upload' %}"><span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;Upload</a></li>
 				<li>
 					<form class="navbar-form" role="search" action="/search/" method="get">
 						<div class="form-group">

@@ -14,7 +14,7 @@
 		<div class="col-md-12">
 			{% for photo in photo_list %}
 				<a href="{% url 'photolib.image_detail' photo.uuid %}">
-					<img data-src="{{ photo.image_thumbnail.url }}" alt="{{ photo.alt }}" src="{{ photo.image_thumbnail.url }}" class="img-thumbnail">
+					<img data-src="{{ photo.image_thumbnail.url }}" alt="{{ photo.alt }}" title="{{ photo.alt }}" src="{{ photo.image_thumbnail.url }}" class="img-thumbnail">
 				</a>
 			{% endfor %}
 		</div>

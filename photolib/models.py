@@ -45,36 +45,28 @@ class Photo(models.Model):
         help_text='Important when citation requires link to source.')
 
     image = models.ImageField(upload_to=upload_path())
-    image_1280 = ImageSpecField(source='image',
-                                processors=[ResizeToFit(1280, 2400, upscale=False)],
-                                format='JPEG',
-                                options={'quality': PHOTO_QUALITY})
     image_1024 = ImageSpecField(source='image',
-                                processors=[ResizeToFit(1024, 2400, upscale=False)],
+                                processors=[ResizeToFit(1024, 3600, upscale=False)],
                                 format='JPEG',
                                 options={'quality': PHOTO_QUALITY})
-    image_968 = ImageSpecField(source='image',
-                                processors=[ResizeToFit(968, 2400, upscale=False)],
+    image_800 = ImageSpecField(source='image',
+                                processors=[ResizeToFit(800, 3600, upscale=False)],
                                 format='JPEG',
                                 options={'quality': PHOTO_QUALITY})
-    image_640 = ImageSpecField(source='image',
-                                processors=[ResizeToFit(640, 2400, upscale=False)],
+    image_300 = ImageSpecField(source='image',
+                                processors=[ResizeToFit(300, 3600, upscale=False)],
                                 format='JPEG',
                                 options={'quality': PHOTO_QUALITY})
-    image_480 = ImageSpecField(source='image',
-                                processors=[ResizeToFit(480, 2400, upscale=False)],
-                                format='JPEG',
-                                options={'quality': PHOTO_QUALITY})
-    image_250 = ImageSpecField(source='image',
-                                processors=[ResizeToFit(250, 2400, upscale=False)],
-                                format='JPEG',
-                                options={'quality': PHOTO_QUALITY})
-    image_600sq = ImageSpecField(source='image',
+    image_800sq = ImageSpecField(source='image',
                                 processors=[ResizeToFill(600, 600)],
                                 format='JPEG',
                                 options={'quality': PHOTO_QUALITY})
     image_300sq = ImageSpecField(source='image',
                                 processors=[ResizeToFill(300, 300)],
+                                format='JPEG',
+                                options={'quality': PHOTO_QUALITY})
+    image_180sq = ImageSpecField(source='image',
+                                processors=[ResizeToFill(180, 180)],
                                 format='JPEG',
                                 options={'quality': PHOTO_QUALITY})
     image_thumbnail = ImageSpecField(source='image',

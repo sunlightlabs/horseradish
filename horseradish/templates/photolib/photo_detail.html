@@ -9,8 +9,13 @@
         </div>
         <div class="col-md-4">
             <div class="img-controls">
-                <a href="{{ photo.image.url }}" class="btn btn-default">View Original</a>
-                <a href="{% url 'photolib.image_edit' photo.uuid %}" class="btn btn-default">
+                <a href="#" class="btn btn-default btn-primary">
+                	<span class="glyphicon glyphicon-share"></span>&nbsp;&nbsp;Embed
+                </a>
+                <a href="{{ photo.image.url }}" class="btn btn-default btn-primary">
+                	<span class="glyphicon glyphicon-resize-full"></span>&nbsp;&nbsp;View Full Size
+                </a>
+                <a href="{% url 'photolib.image_edit' photo.uuid %}" class="btn btn-default btn-primary">
                     <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit
                 </a>
             </div>
@@ -20,194 +25,148 @@
         <div class="col-md-6">
 
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#full" data-toggle="tab">Full</a></li>
-                <li><a href="#square" data-toggle="tab">Square</a></li>
+                <li class="active"><a href="#full-width" data-toggle="tab">Full Width</a></li>
+                <li><a href="#floated" data-toggle="tab">Left or Right</a></li>
+                <li><a href="#splash" data-toggle="tab">Splash</a></li>
             </ul>
 
             <div class="tab-content">
-                <div class="tab-pane active" id="full">
-                    <img src="{{ photo.image_968.url }}" class="the-image">
+                <div class="tab-pane active" id="full-width">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label for="input-800-url" class="col-sm-2 control-label">800px</label>
+                            <div class="col-sm-10">
+                                <div class="input-group">
+                                    <input id="input-800-url" class="form-control" type="text" value="{{ photo.image_800.url }}">
+                                    <span class="input-group-btn">
+                                        <a class="btn btn-default" href="{{ photo.image_800.url }}" download="{{ photo.filename }}">
+                                            <span class="glyphicon glyphicon-save"></span>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <img src="{{ photo.image_800.url }}" class="the-image">
                 </div>
-                <div class="tab-pane" id="square">
-                    <img src="{{ photo.image_300sq.url }}" class="the-image">
+                <div class="tab-pane" id="floated">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label for="input-300-url" class="col-sm-2 control-label">300px</label>
+                            <div class="col-sm-10">
+                                <div class="input-group">
+                                    <input id="input-300-url" class="form-control" type="text" value="{{ photo.image_300.url }}">
+                                    <span class="input-group-btn">
+                                        <a class="btn btn-default" href="{{ photo.image_300.url }}" download="{{ photo.filename }}">
+                                            <span class="glyphicon glyphicon-save"></span>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <img src="{{ photo.image_300.url }}" class="the-image">
+                </div>
+                <div class="tab-pane" id="splash">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label for="input-180sq-url" class="col-sm-2 control-label">180px</label>
+                            <div class="col-sm-10">
+                                <div class="input-group">
+                                    <input id="input-180sq-url" class="form-control" type="text" value="{{ photo.image_180sq.url }}">
+                                    <span class="input-group-btn">
+                                        <a class="btn btn-default" href="{{ photo.image_180sq.url }}" download="{{ photo.filename }}">
+                                            <span class="glyphicon glyphicon-save"></span>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <img src="{{ photo.image_180sq.url }}" class="the-image">
                 </div>
             </div>
         </div>
         <div class="col-md-6">
 
-            <ul class="nav nav-tabs">
-                <li class="active"><a href="#details" data-toggle="tab">Details</a></li>
-                <li><a href="#urls" data-toggle="tab">URLs</a></li>
-            </ul>
+        	{% if not photo.alt %}
+        		<div class="alert alert-warning">
+        			<strong>Missing alt text.</strong> Alternative text is important for accessibility.
+        		</div>
+        	{% endif %}
 
-            <div class="tab-content">
-                <div class="tab-pane active" id="details">
-
-                	{% if not photo.alt %}
-                		<div class="alert alert-warning">
-                			<strong>Missing alt text.</strong> Alternative text is important for accessibility.
-                		</div>
-                	{% endif %}
-
-                    <table class="table table-hover">
-                    	{% if photo.alt %}
-	                        <tr>
-	                            <th>Alt</th>
-	                            <td>
-	                                <a href="#" class="btn btn-default btn-xs clipboard" data-for="the-alt" style="float: right;">
-	                                    <span class="glyphicon glyphicon-paperclip"></span>
-	                                </a>
-	                                <div class="the-alt">{{ photo.alt }}</div>
-	                            </td>
-	                        </tr>
-                        {% endif %}
-                        {% if photo.caption %}
-	                        <tr>
-	                            <th>Caption</th>
-	                            <td>
-	                                <a href="#" class="btn btn-default btn-xs clipboard" data-for="the-caption" style="float: right;">
-	                                    <span class="glyphicon glyphicon-paperclip"></span>
-	                                </a>
-	                                <div class="the-caption">{{ photo.caption|apply_markup:"markdown" }}</div>
-	                            </td>
-	                        </tr>
-                        {% endif %}
-                        {% if photo.credits %}
-                            <tr>
-                                <th>Credits</th>
-                                <td>
-                                    <a href="#" class="btn btn-default btn-xs clipboard" data-for="the-credits" style="float: right;">
-                                        <span class="glyphicon glyphicon-paperclip"></span>
-                                    </a>
-                                    <div class="the-credits">
-                                        {{ photo.credits|apply_markup:"markdown" }}
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endif %}
-                        {% if photo.source or photo.source_url %}
-                            <tr>
-                                <th>Source</th>
-                                <td>
-                                    <a href="#" class="btn btn-default btn-xs clipboard" data-for="the-source" style="float: right;">
-                                        <span class="glyphicon glyphicon-paperclip"></span>
-                                    </a>
-                                    {% if photo.source %}
-                                        <span class="label label-default">{{ photo.source }}</span>
-                                    {% endif %}
-                                    {% if photo.source_url %}
-                                        <div class="hidden the-source"><p>{{ photo.source_url }}</p></div>
-                                        <small><a href="{{ photo.source_url }}">{{ photo.source_url|truncatechars:50 }}</a></small>
-                                    {% endif %}
-                                </td>
-                            </tr>
-                        {% endif %}
-                        {% with tags=photo.tags %}
-	                        {% if tags %}
-		                        <tr>
-		                            <th>Tags</th>
-		                            <td>
-		                                {% for tag in tags %}
-		                                    <a href="{% url 'photolib.tag_list' tag.slug %}" class="label label-info">{{ tag.name }}</a>
-		                                {% endfor %}
-		                            </td>
-		                        </tr>
-	                        {% endif %}
-                        {% endwith %}
-                        {% if photo.notes %}
-                            <tr>
-                                <th>Notes</th>
-                                <td>{{ photo.notes|apply_markup:"markdown" }}</td>
-                            </tr>
-                        {% endif %}
-                    </table>
-                </div>
-                <div class="tab-pane" id="urls">
-                	{% if photo.image %}
-	                    <form class="form-horizontal" role="form">
-	                        <div class="form-group">
-	                            <label for="input-1024-url" class="col-sm-2 control-label">1024px</label>
-	                            <div class="col-sm-10">
-	                                <div class="input-group">
-	                                    <input id="input-1024-url" class="form-control" type="text" value="{{ photo.image_1024.url }}">
-	                                    <span class="input-group-btn">
-	                                        <a class="btn btn-default" href="{{ photo.image_1024.url }}" download="{{ photo.filename }}">
-	                                            <span class="glyphicon glyphicon-save"></span>
-	                                        </a>
-	                                    </span>
-	                                </div>
-	                            </div>
-	                        </div>
-	                        <div class="form-group">
-	                            <label for="input-968-url" class="col-sm-2 control-label">968px</label>
-	                            <div class="col-sm-10">
-	                                <div class="input-group">
-	                                    <input id="input-968-url" class="form-control" type="text" value="{{ photo.image_968.url }}">
-	                                    <span class="input-group-btn">
-	                                        <a class="btn btn-default" href="{{ photo.image_968.url }}" download="{{ photo.filename }}">
-	                                            <span class="glyphicon glyphicon-save"></span>
-	                                        </a>
-	                                    </span>
-	                                </div>
-	                            </div>
-	                        </div>
-	                        <div class="form-group">
-	                            <label for="input-640-url" class="col-sm-2 control-label">640px</label>
-	                            <div class="col-sm-10">
-	                                <div class="input-group">
-	                                    <input id="input-640-url" class="form-control" type="text" value="{{ photo.image_640.url }}">
-	                                    <span class="input-group-btn">
-	                                        <a class="btn btn-default" href="{{ photo.image_640.url }}" download="{{ photo.filename }}">
-	                                            <span class="glyphicon glyphicon-save"></span>
-	                                        </a>
-	                                    </span>
-	                                </div>
-	                            </div>
-	                        </div>
-	                        <div class="form-group">
-	                            <label for="input-480-url" class="col-sm-2 control-label">480px</label>
-	                            <div class="col-sm-10">
-	                                <div class="input-group">
-	                                    <input id="input-480-url" class="form-control" type="text" value="{{ photo.image_480.url }}">
-	                                    <span class="input-group-btn">
-	                                        <a class="btn btn-default" href="{{ photo.image_480.url }}" download="{{ photo.filename }}">
-	                                            <span class="glyphicon glyphicon-save"></span>
-	                                        </a>
-	                                    </span>
-	                                </div>
-	                            </div>
-	                        </div>
-	                        <hr>
-	                        <div class="form-group">
-	                            <label for="input-600sq-url" class="col-sm-2 control-label">600sq</label>
-	                            <div class="col-sm-10">
-	                                <div class="input-group">
-	                                    <input id="input-600sq-url" class="form-control" type="text" value="{{ photo.image_600sq.url }}">
-	                                    <span class="input-group-btn">
-	                                        <a class="btn btn-default" href="{{ photo.image_600sq.url }}" download="{{ photo.filename }}">
-	                                            <span class="glyphicon glyphicon-save"></span>
-	                                        </a>
-	                                    </span>
-	                                </div>
-	                            </div>
-	                        </div>
-	                        <div class="form-group">
-	                            <label for="input-300sq-url" class="col-sm-2 control-label">300sq</label>
-	                            <div class="col-sm-10">
-	                                <div class="input-group">
-	                                    <input id="input-300sq-url" class="form-control" type="text" value="{{ photo.image_300sq.url }}">
-	                                    <span class="input-group-btn">
-	                                        <a class="btn btn-default" href="{{ photo.image_300sq.url }}" download="{{ photo.filename }}">
-	                                            <span class="glyphicon glyphicon-save"></span>
-	                                        </a>
-	                                    </span>
-	                                </div>
-	                            </div>
-	                        </div>
-	                    </form>
-	                {% endif %}
-                </div>
-            </div>
+            <table class="table table-hover">
+            	{% if photo.alt %}
+                    <tr>
+                        <th>Alt</th>
+                        <td>
+                            <a href="#" class="btn btn-default btn-xs clipboard" data-for="the-alt" style="float: right;">
+                                <span class="glyphicon glyphicon-paperclip"></span>
+                            </a>
+                            <div class="the-alt">{{ photo.alt }}</div>
+                        </td>
+                    </tr>
+                {% endif %}
+                {% if photo.caption %}
+                    <tr>
+                        <th>Caption</th>
+                        <td>
+                            <a href="#" class="btn btn-default btn-xs clipboard" data-for="the-caption" style="float: right;">
+                                <span class="glyphicon glyphicon-paperclip"></span>
+                            </a>
+                            <div class="the-caption">{{ photo.caption|apply_markup:"markdown" }}</div>
+                        </td>
+                    </tr>
+                {% endif %}
+                {% if photo.credits %}
+                    <tr>
+                        <th>Credits</th>
+                        <td>
+                            <a href="#" class="btn btn-default btn-xs clipboard" data-for="the-credits" style="float: right;">
+                                <span class="glyphicon glyphicon-paperclip"></span>
+                            </a>
+                            <div class="the-credits">
+                                {{ photo.credits|apply_markup:"markdown" }}
+                            </div>
+                        </td>
+                    </tr>
+                {% endif %}
+                {% if photo.source or photo.source_url %}
+                    <tr>
+                        <th>Source</th>
+                        <td>
+                            <a href="#" class="btn btn-default btn-xs clipboard" data-for="the-source" style="float: right;">
+                                <span class="glyphicon glyphicon-paperclip"></span>
+                            </a>
+                            {% if photo.source %}
+                                <span class="label label-default">{{ photo.source }}</span>
+                            {% endif %}
+                            {% if photo.source_url %}
+                                <div class="hidden the-source"><p>{{ photo.source_url }}</p></div>
+                                <small><a href="{{ photo.source_url }}">{{ photo.source_url|truncatechars:50 }}</a></small>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endif %}
+                {% with tags=photo.tags %}
+                    {% if tags %}
+                        <tr>
+                            <th>Tags</th>
+                            <td>
+                                {% for tag in tags %}
+                                    <a href="{% url 'photolib.tagged_list' tag.slug %}" class="label label-info">{{ tag.name }}</a>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endwith %}
+                {% if photo.notes %}
+                    <tr>
+                        <th>Notes</th>
+                        <td>{{ photo.notes|apply_markup:"markdown" }}</td>
+                    </tr>
+                {% endif %}
+            </table>
         </div>
     </div>
     <div class="modal fade" id="the-modal">

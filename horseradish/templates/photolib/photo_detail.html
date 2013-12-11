@@ -14,7 +14,7 @@
                 	<span class="glyphicon glyphicon-share"></span>&nbsp;&nbsp;Embed
                 </a>
                 <a href="{{ photo.image.url }}" class="btn btn-default">
-                	<span class="glyphicon glyphicon-resize-full"></span>&nbsp;&nbsp;View Full Size
+                	<span class="glyphicon glyphicon-resize-full"></span>&nbsp;&nbsp;Full Size
                 </a>
                 <a href="{% url 'photolib.image_edit' photo.uuid %}" class="btn btn-default">
                     <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit
@@ -92,7 +92,7 @@
 
         	{% if not photo.alt %}
         		<div class="alert alert-danger">
-        			<strong>Missing alt text.</strong> Alternative text is important for accessibility.
+        			<strong>Missing alt text.</strong> Alternative text is important for accessibility. <a href="http://webaim.org/techniques/alttext/" class="alert-link">Read more.</a>
         		</div>
         	{% endif %}
 

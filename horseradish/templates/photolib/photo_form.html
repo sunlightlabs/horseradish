@@ -14,10 +14,14 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-md-4" style="text-align: center;">
+            <img src="{{ photo.image_300.url }}" class="img-thumbnail">
+        </div>
         <div class="col-md-8">
             <form class="form-horizontal" role="form" action="." method="post">
                 {% csrf_token %}
                 <fieldset>
+                    <legend>Content</legend>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">UUID</label>
                         <div class="col-sm-10">
@@ -78,15 +82,12 @@
                 </fieldset>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button class="btn btn-default btn-danger" style="float: right;">Delete</button>
+                        <button class="btn btn-default btn-danger" style="float: right;" disabled="disabled">Delete</button>
                         <button class="btn btn-default btn-primary">Save</button>
                         <a href="{% url 'photolib.image_detail' photo.uuid %}" class="btn btn-default">Cancel</a>
                     </div>
                 </div>
             </form>
-        </div>
-        <div class="col-md-4">
-            <img src="{{ photo.image_thumbnail.url }}" class="img-thumbnail">
         </div>
     </div>
 {% endblock %}

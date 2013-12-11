@@ -99,34 +99,29 @@
         	<h3>Content</h3>
 
             <table class="table table-hover">
-            	{% if photo.alt %}
-                    <tr>
-                        <th>Alt</th>
-                        <td>
-                            <a href="#" class="btn btn-default btn-xs clipboard" data-for="the-alt" style="float: right;">
-                                <span class="glyphicon glyphicon-paperclip"></span>
-                            </a>
-                            <div class="the-alt">{{ photo.alt }}</div>
-                        </td>
-                    </tr>
-                {% endif %}
-                {% if photo.caption %}
-                    <tr>
-                        <th>Caption</th>
-                        <td>
-                            <a href="#" class="btn btn-default btn-xs clipboard" data-for="the-caption" style="float: right;">
-                                <span class="glyphicon glyphicon-paperclip"></span>
-                            </a>
-                            <div class="the-caption">{{ photo.caption|apply_markup:"markdown" }}</div>
-                        </td>
-                    </tr>
-                {% endif %}
+        	    <tr>
+                    <th>Alt</th>
+                    <td>
+                        <a href="#" class="btn btn-default btn-xs clipboard" data-for="the-alt" style="float: right;">
+                            <span class="glyphicon glyphicon-paperclip"></span>
+                        </a>
+                        <div class="the-alt">{{ photo.alt }}</div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Caption</th>
+                    <td>
+                        <a href="#" class="btn btn-default btn-xs clipboard" data-for="the-caption" style="float: right;">
+                            <span class="glyphicon glyphicon-paperclip"></span>
+                        </a>
+                        <div class="the-caption">{{ photo.caption|apply_markup:"markdown" }}</div>
+                    </td>
+                </tr>
             </table>
 
             <h3>Meta</h3>
 
             <table class="table table-hover">
-                {% if photo.credits %}
                     <tr>
                         <th>Credits</th>
                         <td>
@@ -138,8 +133,6 @@
                             </div>
                         </td>
                     </tr>
-                {% endif %}
-                {% if photo.source or photo.source_url %}
                     <tr>
                         <th>Source</th>
                         <td>
@@ -155,25 +148,24 @@
                             {% endif %}
                         </td>
                     </tr>
-                {% endif %}
-                {% with tags=photo.tags %}
-                    {% if tags %}
-                        <tr>
-                            <th>Tags</th>
-                            <td>
-                                {% for tag in tags %}
-                                    <a href="{% url 'photolib.tagged_list' tag.slug %}" class="label label-info">{{ tag.name }}</a>
-                                {% endfor %}
-                            </td>
-                        </tr>
-                    {% endif %}
-                {% endwith %}
-                {% if photo.notes %}
+                    <tr>
+                        <th>Tags</th>
+                        <td>
+                			{% with tags=photo.tags %}
+                    			{% if tags %}
+	                                {% for tag in tags %}
+	                                    <a href="{% url 'photolib.tagged_list' tag.slug %}" class="label label-info">{{ tag.name }}</a>
+	                                {% endfor %}
+	                            {% else %}
+	                            	&nbsp;
+			                    {% endif %}
+			                {% endwith %}
+                        </td>
+                    </tr>
                     <tr>
                         <th>Notes</th>
                         <td>{{ photo.notes|apply_markup:"markdown" }}</td>
                     </tr>
-                {% endif %}
             </table>
         </div>
     </div>

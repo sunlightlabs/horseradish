@@ -24,3 +24,4 @@ The following environment variables are required:
 * ELASTICSEARCH_INDEX
 * GOOGLEAUTH_DOMAIN
 * STATIC_ROOT
+* RAVEN_DSN

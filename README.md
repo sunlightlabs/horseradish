@@ -23,3 +23,4 @@ The following environment variables are required:
 * ELASTICSEARCH_URL
 * ELASTICSEARCH_INDEX
 * GOOGLEAUTH_DOMAIN
+* STATIC_ROOT

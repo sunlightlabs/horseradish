@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'django_markup',
     'googleauth',
+    'gunicorn',
     'haystack',
     'imagekit',
     'pagination_bootstrap',

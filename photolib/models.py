@@ -71,7 +71,7 @@ class Photo(models.Model):
     last_updated = models.DateTimeField(blank=True, default=datetime.datetime.utcnow)
 
     class Meta:
-        pass
+        ordering = ('-uploaded',)
 
     def __unicode__(self):
         return u"%s/%s" % (self.uuid, self.filename)

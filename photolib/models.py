@@ -47,31 +47,24 @@ class Photo(models.Model):
     image = models.ImageField(upload_to=upload_path())
     image_1024 = ImageSpecField(source='image',
                                 processors=[ResizeToFit(1024, 3600, upscale=False)],
-                                format='JPEG',
                                 options={'quality': PHOTO_QUALITY})
     image_800 = ImageSpecField(source='image',
                                 processors=[ResizeToFit(800, 3600, upscale=False)],
-                                format='JPEG',
                                 options={'quality': PHOTO_QUALITY})
     image_300 = ImageSpecField(source='image',
                                 processors=[ResizeToFit(300, 3600, upscale=False)],
-                                format='JPEG',
                                 options={'quality': PHOTO_QUALITY})
     image_800sq = ImageSpecField(source='image',
                                 processors=[ResizeToFill(600, 600)],
-                                format='JPEG',
                                 options={'quality': PHOTO_QUALITY})
     image_300sq = ImageSpecField(source='image',
                                 processors=[ResizeToFill(300, 300)],
-                                format='JPEG',
                                 options={'quality': PHOTO_QUALITY})
     image_180sq = ImageSpecField(source='image',
                                 processors=[ResizeToFill(180, 180)],
-                                format='JPEG',
                                 options={'quality': PHOTO_QUALITY})
     image_thumbnail = ImageSpecField(source='image',
                                 processors=[ResizeToFill(200, 200)],
-                                format='JPEG',
                                 options={'quality': PHOTO_QUALITY})
 
     uploaded = models.DateTimeField(default=datetime.datetime.utcnow)

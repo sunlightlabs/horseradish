@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'haystack',
     'imagekit',
     'pagination_bootstrap',
+    'raven.contrib.django.raven_compat',
     'south',
     'taggit',
     'photolib',

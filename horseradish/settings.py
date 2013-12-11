@@ -14,6 +14,10 @@ import dj_database_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+ADMINS = (
+    ('Jeremy', 'jcarbaugh@sunlightfoundation.com'),
+)
+MANAGERS = ADMINS
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/

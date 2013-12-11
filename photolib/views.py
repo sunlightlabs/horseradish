@@ -5,6 +5,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.list import ListView
 from taggit.models import Tag
 
+from photolib.forms import PhotoUpdateForm
 from photolib.models import Photo
 
 PHOTOS_PER_PAGE = getattr(settings, 'PHOTOS_PER_PAGE', 20)
@@ -23,9 +24,13 @@ class ImageListView(ListView):
 
 class ImageUpdateView(UpdateView):
     model = Photo
-    fields = ['filename', 'alt', 'caption', 'notes', 'credits', 'source', 'source_url', 'photo_tags']
+    # fields = ['filename', 'alt', 'caption', 'notes', 'credits', 'source', 'source_url', 'photo_tags']
+    form_class = PhotoUpdateForm
     slug_field = 'uuid'
     slug_url_kwarg = 'uuid'
+
+    def has_changed(self):
+        return True
 
 
 class ImageUploadView(CreateView):

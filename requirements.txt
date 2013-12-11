@@ -14,7 +14,9 @@ django-storages==1.1.8
 django-taggit==0.11.1
 pilkit==1.1.5
 pyelasticsearch==0.6.1
+python-openid==2.2.5
 requests==2.0.1
 simplejson==3.3.1
 six==1.4.1
 sqlparse==0.1.10
+git+git://github.com/jcarbaugh/django-googleauth.git#egg=googleauth

@@ -7,5 +7,6 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^search/', include('haystack.urls')),
+    url(r'^', include('googleauth.urls')),
     url(r'^', include('photolib.urls')),
 )

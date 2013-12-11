@@ -25,18 +25,21 @@
 			<div class="navbar-header">
 				<a class="navbar-brand" href="/"><span class="glyphicon glyphicon-picture"></span> Horseradish</a>
 			</div>
-			<ul class="nav navbar-nav navbar-right">
-				<li><a href="{% url 'photolib.tag_list' %}"><span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;Tags</a></li>
-				<li><a href="{% url 'photolib.image_upload' %}"><span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;Upload</a></li>
-				<li>
-					<form class="navbar-form" role="search" action="/search/" method="get">
-						<div class="form-group">
-							<input type="text" class="form-control" placeholder="Search" name="q" value="{% if query %}{{ query }}{% endif %}">
-						</div>
-						<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
-					</form>
-				</li>
-			</ul>
+			{% if request.user.is_authenticated %}
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="{% url 'photolib.tag_list' %}"><span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;Tags</a></li>
+					<li><a href="{% url 'photolib.image_upload' %}"><span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;Upload</a></li>
+					<li>
+						<form class="navbar-form" role="search" action="/search/" method="get">
+							<div class="form-group">
+								<input type="text" class="form-control" placeholder="Search" name="q" value="{% if query %}{{ query }}{% endif %}">
+							</div>
+							<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+						</form>
+					</li>
+					<li><a href="/logout/"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Log Out</a></li>
+				</ul>
+			{% endif %}
 		</nav>
 		<div role="main" class="container">
 			{% block content %}{% endblock %}

@@ -22,3 +22,4 @@ The following environment variables are required:
 * AWS_LOCATION (optional)
 * ELASTICSEARCH_URL
 * ELASTICSEARCH_INDEX
+* GOOGLEAUTH_DOMAIN

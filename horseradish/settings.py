@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'debug_toolbar',
     'django_markup',
+    'googleauth',
     'haystack',
     'imagekit',
     'pagination_bootstrap',
@@ -101,6 +102,19 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.messages.context_processors.messages",
 )
 
+# auth
+
+AUTHENTICATION_BACKENDS = (
+    'googleauth.backends.GoogleAuthBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+LOGIN_URL = "/login/"
+LOGOUT_URL = "/logout/"
+LOGIN_REDIRECT_URL = "/"
+
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+
 #
 # custom stuff
 #
@@ -130,3 +144,6 @@ PHOTO_SOURCES = [(s, s) for s in sorted((
     'Flickr',
     'iStockphoto',
 ))]
+
+GOOGLEAUTH_IS_STAFF = False
+GOOGLEAUTH_DOMAIN = os.environ.get('GOOGLEAUTH_DOMAIN')

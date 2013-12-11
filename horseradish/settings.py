@@ -153,6 +153,7 @@ PHOTO_SOURCES = [(s, s) for s in sorted((
 
 GOOGLEAUTH_IS_STAFF = False
 GOOGLEAUTH_DOMAIN = os.environ.get('GOOGLEAUTH_DOMAIN')
+GOOGLEAUTH_REALM = os.environ.get('GOOGLEAUTH_REALM')
 
 
 # logging

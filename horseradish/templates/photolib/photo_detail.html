@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load markup_tags %}
+{% load staticfiles %}
 
 {% block content %}
     <div class="row">
@@ -9,13 +10,13 @@
         </div>
         <div class="col-md-4">
             <div class="img-controls">
-                <a href="#" class="btn btn-default btn-primary">
+                <a href="#embed-modal" class="btn btn-default" data-toggle="modal">
                 	<span class="glyphicon glyphicon-share"></span>&nbsp;&nbsp;Embed
                 </a>
-                <a href="{{ photo.image.url }}" class="btn btn-default btn-primary">
+                <a href="{{ photo.image.url }}" class="btn btn-default">
                 	<span class="glyphicon glyphicon-resize-full"></span>&nbsp;&nbsp;View Full Size
                 </a>
-                <a href="{% url 'photolib.image_edit' photo.uuid %}" class="btn btn-default btn-primary">
+                <a href="{% url 'photolib.image_edit' photo.uuid %}" class="btn btn-default">
                     <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit
                 </a>
             </div>
@@ -95,6 +96,8 @@
         		</div>
         	{% endif %}
 
+        	<h3>Content</h3>
+
             <table class="table table-hover">
             	{% if photo.alt %}
                     <tr>
@@ -118,6 +121,11 @@
                         </td>
                     </tr>
                 {% endif %}
+            </table>
+
+            <h3>Meta</h3>
+
+            <table class="table table-hover">
                 {% if photo.credits %}
                     <tr>
                         <th>Credits</th>
@@ -169,6 +177,25 @@
             </table>
         </div>
     </div>
+    <div class="modal fade" id="embed-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Embed</h4>
+                </div>
+                <div class="modal-body">
+		            <div class="btn-group" id="embed-selector">
+						<a href="#" data-url="{{ photo.image_800.url }}" data-class="blockyblock" class="btn btn-default">Centered</a>
+						<a href="#" data-url="{{ photo.image_300.url }}" data-class="right" class="btn btn-default">Right</a>
+						<a href="#" data-url="{{ photo.image_300.url }}" data-class="left" class="btn btn-default">Left</a>
+						<a href="#" data-url="{{ photo.image_800.url }}" data-class="full-width" class="btn btn-default">Full Width</a>
+					</div>
+                    <textarea id="embed-textarea"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="the-modal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -186,9 +213,16 @@
             </div>
         </div>
     </div>
+    <script type="text/template" id="tpl-embed">
+<figure class="{% verbatim %}{{ class }}{% endverbatim %}">
+	<img src="{% verbatim %}{{{ url }}}{% endverbatim %}" alt="{{ photo.alt }}">
+	{% if photo.caption %}<figcaption>{{ photo.caption|apply_markup:"markdown" }}</figcaption>{% endif %}
+</figure>
+    </script>
 {% endblock %}
 
 {% block js %}
+	<script src="{% static 'js/mustache.js' %}"></script>
     <script>
         $(document).ready(function() {
 
@@ -226,6 +260,30 @@
                 $modal.modal();
                 selectAll($modal.find('textarea'));
             });
+
+            // $('#embed-textarea').text(
+            // 	Mustache.render($('#tpl-embed').text(), {
+            // 		'url': 'http://boo.com',
+            // 		'class': 'full-width',
+            // 	}).trim()
+            // );
+
+			$('#embed-selector .btn').click(function(ev) {
+            	ev.preventDefault();
+            	var $this = $(this)
+            	$('#embed-selector a.active').removeClass('active');
+            	$this.addClass('active');
+
+            	$('#embed-textarea').text(
+	            	Mustache.render($('#tpl-embed').text(), {
+	            		'url': $this.attr('data-url'),
+	            		'class': $this.attr('data-class'),
+	            	}).trim()
+	            );
+
+	            selectAll($('#embed-textarea')[0]);
+            });
+
         });
     </script>
 {% endblock %}

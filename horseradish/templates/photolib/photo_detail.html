@@ -38,7 +38,7 @@
                             <label for="input-800-url" class="col-sm-2 control-label">800px</label>
                             <div class="col-sm-10">
                                 <div class="input-group">
-                                    <input id="input-800-url" class="form-control" type="text" value="{{ photo.image_800.url }}">
+                                    <input id="input-800-url" class="form-control focus-select" type="text" value="{{ photo.image_800.url }}">
                                     <span class="input-group-btn">
                                         <a class="btn btn-default" href="{{ photo.image_800.url }}" download="{{ photo.filename }}">
                                             <span class="glyphicon glyphicon-save"></span>
@@ -56,7 +56,7 @@
                             <label for="input-300-url" class="col-sm-2 control-label">300px</label>
                             <div class="col-sm-10">
                                 <div class="input-group">
-                                    <input id="input-300-url" class="form-control" type="text" value="{{ photo.image_300.url }}">
+                                    <input id="input-300-url" class="form-control focus-select" type="text" value="{{ photo.image_300.url }}">
                                     <span class="input-group-btn">
                                         <a class="btn btn-default" href="{{ photo.image_300.url }}" download="{{ photo.filename }}">
                                             <span class="glyphicon glyphicon-save"></span>
@@ -74,7 +74,7 @@
                             <label for="input-180sq-url" class="col-sm-2 control-label">180px</label>
                             <div class="col-sm-10">
                                 <div class="input-group">
-                                    <input id="input-180sq-url" class="form-control" type="text" value="{{ photo.image_180sq.url }}">
+                                    <input id="input-180sq-url" class="form-control focus-select" type="text" value="{{ photo.image_180sq.url }}">
                                     <span class="input-group-btn">
                                         <a class="btn btn-default" href="{{ photo.image_180sq.url }}" download="{{ photo.filename }}">
                                             <span class="glyphicon glyphicon-save"></span>
@@ -191,7 +191,7 @@
 						<a href="#" data-url="{{ photo.image_300.url }}" data-class="left" class="btn btn-default">Left</a>
 						<a href="#" data-url="{{ photo.image_800.url }}" data-class="full-width" class="btn btn-default">Full Width</a>
 					</div>
-                    <textarea id="embed-textarea"></textarea>
+                    <textarea id="embed-textarea" class="focus-select"></textarea>
                 </div>
             </div>
         </div>
@@ -204,11 +204,7 @@
                     <h4 class="modal-title">Clipboard</h4>
                 </div>
                 <div class="modal-body">
-                    <textarea class="the-textarea"></textarea>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Copy and Close</button>
+                    <textarea class="the-textarea focus-select"></textarea>
                 </div>
             </div>
         </div>
@@ -241,11 +237,7 @@
                 $this.mouseup(mouseUpHandler);
             };
 
-            $('.the-textarea').focus(function() {
-                selectAll(this);
-            });
-
-            $('#urls input').focus(function() {
+            $('.focus-select').focus(function() {
             	selectAll(this);
             });
 
@@ -253,20 +245,21 @@
                 ev.preventDefault();
                 var content = '';
                 var target = $(this).attr('data-for');
-                $('.' + target).find('p').each(function() {
-                    content += $(this).html();
-                });
+
+                var $p = $('.' + target).find('p');
+
+                if ($p.length === 0) {
+                	content = $('.' + target).text();
+                } else {
+                	$p.each(function() {
+                    	content += $(this).html();
+                	});
+                }
+
                 $modal.find('textarea').text(content);
                 $modal.modal();
                 selectAll($modal.find('textarea'));
             });
-
-            // $('#embed-textarea').text(
-            // 	Mustache.render($('#tpl-embed').text(), {
-            // 		'url': 'http://boo.com',
-            // 		'class': 'full-width',
-            // 	}).trim()
-            // );
 
 			$('#embed-selector .btn').click(function(ev) {
             	ev.preventDefault();

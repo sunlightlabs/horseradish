@@ -156,6 +156,8 @@ GOOGLEAUTH_IS_STAFF = False
 GOOGLEAUTH_DOMAIN = os.environ.get('GOOGLEAUTH_DOMAIN')
 GOOGLEAUTH_REALM = os.environ.get('GOOGLEAUTH_REALM')
 
+IMAGEKIT_SPEC_CACHEFILE_NAMER = 'photolib.namers.size_aware'
+
 RAVEN_CONFIG = {
     'dsn': os.environ.get('RAVEN_DSN'),
 }

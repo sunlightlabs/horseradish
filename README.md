@@ -23,5 +23,6 @@ The following environment variables are required:
 * ELASTICSEARCH_URL
 * ELASTICSEARCH_INDEX
 * GOOGLEAUTH_DOMAIN
+* GOOGLEAUTH_REALM
 * STATIC_ROOT
 * RAVEN_DSN

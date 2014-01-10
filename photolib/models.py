@@ -9,7 +9,7 @@ from imagekit.processors import ResizeToFill, ResizeToFit
 from taggit.managers import TaggableManager
 
 PHOTO_SOURCES = settings.PHOTO_SOURCES
-PHOTO_QUALITY = getattr(settings, 'PHOTO_QUALITY', 80)
+PHOTO_QUALITY = int(getattr(settings, 'PHOTO_QUALITY', 95))
 
 
 def upload_path(width=None):

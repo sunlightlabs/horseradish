@@ -40,7 +40,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'debug_toolbar',
     'django_markup',
     'googleauth',
     'gunicorn',
@@ -51,6 +50,7 @@ INSTALLED_APPS = (
     'south',
     'taggit',
     'photolib',
+    'debug_toolbar',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -126,9 +126,11 @@ SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 # custom stuff
 #
 
+DEBUG_TOOLBAR_PATCH_SETTINGS = False
 INTERNAL_IPS = ('127.0.0.1', '::1')
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
 
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_KEY')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET')
@@ -153,8 +155,11 @@ PHOTO_SOURCES = [(s, s) for s in sorted((
 ))]
 
 GOOGLEAUTH_IS_STAFF = False
-GOOGLEAUTH_DOMAIN = os.environ.get('GOOGLEAUTH_DOMAIN')
-GOOGLEAUTH_REALM = os.environ.get('GOOGLEAUTH_REALM')
+GOOGLEAUTH_USE_HTTPS = os.environ.get('GOOGLEAUTH_USE_HTTPS', 'True') == 'True'
+GOOGLEAUTH_CLIENT_ID = os.environ.get('GOOGLEAUTH_CLIENT_ID')
+GOOGLEAUTH_CLIENT_SECRET = os.environ.get('GOOGLEAUTH_CLIENT_SECRET')
+GOOGLEAUTH_CALLBACK_DOMAIN = os.environ.get('GOOGLEAUTH_CALLBACK_DOMAIN')
+GOOGLEAUTH_APPS_DOMAIN = os.environ.get('GOOGLEAUTH_APPS_DOMAIN')
 
 IMAGEKIT_SPEC_CACHEFILE_NAMER = 'photolib.namers.size_aware'
 

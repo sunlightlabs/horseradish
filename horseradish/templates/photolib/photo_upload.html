@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<div class="jumbotron">
-    	<p style="text-align: center; color: #999; margin: 4em 0;">Drop an image here to upload</p>
+	<div class="jumbotron" id="dropzone">
+		Drop an image here to upload
     </div>
     <div class="row">
     	<div class="col-md-12">
     		<p>Or select a file the old fashioned way</p>
-	    	<form role="form" class="form-inline" action="." method="post" enctype="multipart/form-data">
+	    	<form role="form" class="form-inline image-form" action="{% url 'photolib.image_upload' %}" method="post" enctype="multipart/form-data">
 	    		{% csrf_token %}
 	    		<div class="form-group">
 	    			<label class="sr-only" for="field_image">File input</label>
@@ -17,4 +17,51 @@
 	    	</form>
 	    </div>
 	</div>
+{% endblock %}
+
+{% block js %}
+	<script>
+		$(document).ready(function() {
+			var $dropzone = $('#dropzone');
+			$dropzone.on('dragenter', function(ev) {
+				ev.preventDefault();
+				$(this).addClass('dropready');
+			});
+			$dropzone.on('dragleave', function(ev) {
+				$(this).removeClass('dropready');
+			});
+			$dropzone.on('dragover', function(ev) {
+				ev.preventDefault();
+			});
+			$dropzone.on('drop dragdrop', function(ev) {
+				ev.preventDefault();
+				var files = ev.target.files || ev.originalEvent.dataTransfer.files || ev.dataTransfer.files;
+				if (files.length == 1) {
+					for (var i = 0; i < files.length; i++) {
+						var f = files[i];
+						var formData = new FormData();
+						formData.append('image', f, f.name);
+						formData.append('csrfmiddlewaretoken', $('input[name=csrfmiddlewaretoken]').val());
+						$.ajax({
+							url: $('form.image-form').attr('action'),
+							type: 'POST',
+							success: function(data, status, xhr) {
+								console.log(data);
+							},
+							error: function(xhr, status, err) {
+								console.log(err);
+							},
+							data: formData,
+							cache: false,
+							contentType: false,
+							processData: false
+						});
+					};
+				} else {
+					alert("Whoa, pal. One file at a time.\nDon't get too productive on me.");
+				}
+				$(this).removeClass('dropready');
+			});
+		});	
+	</script>
 {% endblock %}

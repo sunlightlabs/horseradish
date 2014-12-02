@@ -19,6 +19,15 @@
 				        column-count: 6;
 			}
 			.qa { margin: 4em 0; }
+			#dropzone {
+				text-align: center;
+				color: #999;
+				padding: 4em 0;
+				margin: 0 0 2em 0;
+			}
+			.dropready {
+				box-shadow: 0 0 5px #468CC8;
+			}
 		</style>
 	</head>
 	<body>
@@ -52,7 +61,7 @@
 		<div role="main" class="container">
 			{% block content %}{% endblock %}
 		</div>
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 		<script src="{% static 'js/bootstrap.min.js' %}"></script>
 		{% block js %}{% endblock %}
 	</body>

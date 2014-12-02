@@ -12,16 +12,19 @@ PHOTO_SOURCES = settings.PHOTO_SOURCES
 PHOTO_QUALITY = int(getattr(settings, 'PHOTO_QUALITY', 95))
 
 
-def upload_path(width=None):
-    def inner(instance, filename):
-        (name, ext) = instance.filename.rsplit('.', 1)
-        print uuid
-        uuid_path = "%s/%s/%s" % (instance.uuid[:2], instance.uuid[2:4], instance.uuid[4:])
-        print uuid_path
-        if width:
-            return u'photos/%s/%s-%d.%s' % (uuid_path, name, width, ext)
-        return u'photos/%s/%s.%s' % (uuid_path, name, ext)
-    return inner
+# def upload_path(width=None):
+#     def inner(instance, filename):
+#         (name, ext) = instance.filename.rsplit('.', 1)
+#         uuid_path = "%s/%s/%s" % (instance.uuid[:2], instance.uuid[2:4], instance.uuid[4:])
+#         if width:
+#             return u'photos/%s/%s-%d.%s' % (uuid_path, name, width, ext)
+#         return u'photos/%s/%s.%s' % (uuid_path, name, ext)
+#     return inner
+
+def upload_path(instance, filename):
+    (name, ext) = instance.filename.rsplit('.', 1)
+    uuid_path = "%s/%s/%s" % (instance.uuid[:2], instance.uuid[2:4], instance.uuid[4:])
+    return u'photos/%s/%s.%s' % (uuid_path, name, ext)
 
 
 class Photo(models.Model):
@@ -44,7 +47,8 @@ class Photo(models.Model):
     source_url = models.URLField(blank=True,
         help_text='Important when citation requires link to source.')
 
-    image = models.ImageField(upload_to=upload_path())
+    # image = models.ImageField(upload_to=upload_path())
+    image = models.ImageField(upload_to=upload_path)
     image_1024 = ImageSpecField(source='image',
                                 processors=[ResizeToFit(1024, 3600, upscale=False)],
                                 options={'quality': PHOTO_QUALITY})

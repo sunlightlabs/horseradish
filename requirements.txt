@@ -1,7 +1,7 @@
 Django>=1.7,<1.8
 Markdown>=2.0,<3.0
 Pillow>=2.0,<3.0
-boto>=2.0,<3.0
+boto==2.29.1
 dj-database-url>=0.3,<0.4
 django-appconf>=0.6,<0.7
 django-debug-toolbar>=1.2,<1.3

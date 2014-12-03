@@ -27,7 +27,14 @@ def upload_path(instance, filename):
     return u'photos/%s/%s.%s' % (uuid_path, name, ext)
 
 
+class PhotoManager(models.Manager):
+    def visible(self):
+        return Photo.objects.filter(deleted=False)
+
+
 class Photo(models.Model):
+
+    objects = PhotoManager()
 
     photo_tags = TaggableManager(blank=True, related_name='photos')
 
@@ -73,6 +80,8 @@ class Photo(models.Model):
 
     uploaded = models.DateTimeField(default=datetime.datetime.utcnow)
     last_updated = models.DateTimeField(blank=True, default=datetime.datetime.utcnow)
+
+    deleted = models.BooleanField(default=False)
 
     class Meta:
         ordering = ('-uploaded',)

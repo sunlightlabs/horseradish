@@ -1,9 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<div class="jumbotron" id="dropzone">
-		Drop an image here to upload
-    </div>
+	<div class="jumbotron" id="dropzone">Drop an image here to upload</div>
     <div class="row">
     	<div class="col-md-12">
     		<p>Or select a file the old fashioned way</p>
@@ -42,14 +40,18 @@
 						var formData = new FormData();
 						formData.append('image', f, f.name);
 						formData.append('csrfmiddlewaretoken', $('input[name=csrfmiddlewaretoken]').val());
+						$dropzone.text('Uploading...');
 						$.ajax({
 							url: $('form.image-form').attr('action'),
 							type: 'POST',
 							success: function(data, status, xhr) {
-								console.log(data);
+								$dropzone.text('Here we go!');
+								if (data.url) {
+									window.location = data.url;
+								}
 							},
 							error: function(xhr, status, err) {
-								console.log(err);
+								$dropzone.text(err);
 							},
 							data: formData,
 							cache: false,

@@ -1,7 +1,8 @@
+import json
 from django.conf import settings
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 from taggit.models import Tag
 
@@ -13,18 +14,19 @@ PHOTOS_PER_PAGE = getattr(settings, 'PHOTOS_PER_PAGE', 20)
 
 class ImageDetailView(DetailView):
     model = Photo
+    queryset = Photo.objects.visible()
     slug_field = 'uuid'
     slug_url_kwarg = 'uuid'
 
 
 class ImageListView(ListView):
     model = Photo
+    queryset = Photo.objects.visible()
     paginate_by = PHOTOS_PER_PAGE
 
 
 class ImageUpdateView(UpdateView):
     model = Photo
-    # fields = ['filename', 'alt', 'caption', 'notes', 'credits', 'source', 'source_url', 'photo_tags']
     form_class = PhotoUpdateForm
     slug_field = 'uuid'
     slug_url_kwarg = 'uuid'
@@ -41,7 +43,28 @@ class ImageUploadView(CreateView):
     def form_valid(self, form):
         image = form.cleaned_data['image']
         self.object = Photo.objects.create(filename=image.name, image=image)
+        if self.request.is_ajax():
+            data = {
+                'url': self.object.get_absolute_url()
+            }
+            content = json.dumps(data)
+            return HttpResponse(content, content_type='application/json')
         return HttpResponseRedirect(self.get_success_url())
+
+
+class ImageDeleteView(DeleteView):
+    model = Photo
+    queryset = Photo.objects.visible()
+    slug_field = 'uuid'
+    slug_url_kwarg = 'uuid'
+    success_url = '/'
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        success_url = self.get_success_url()
+        self.object.deleted = True
+        self.object.save()
+        return HttpResponseRedirect(success_url)
 
 
 class TagListView(ListView):
@@ -53,11 +76,12 @@ class TagListView(ListView):
 
 class TaggedImageListView(ListView):
     model = Photo
+    queryset = Photo.objects.visible()
     paginate_by = PHOTOS_PER_PAGE
 
     def get_queryset(self):
         slug = self.kwargs.get('slug', '').lower()
-        return self.model.objects.filter(photo_tags__slug=slug)
+        return self.queryset.filter(photo_tags__slug=slug)
 
     def get_context_data(self):
         slug = self.kwargs.get('slug', '').lower()

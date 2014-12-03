@@ -24,8 +24,8 @@ class PhotoAdmin(admin.ModelAdmin):
             'fields': ('credits', 'source', 'source_url')
         }),
     )
-    list_display = ('uuid', 'filename', tags_str, source_str, 'last_updated')
-    list_filter = ('source',)
+    list_display = ('uuid', 'filename', tags_str, source_str, 'last_updated', 'deleted')
+    list_filter = ('deleted', 'source')
     read_only_fields = ('uuid', 'last_updated', 'uploaded')
 
 admin.site.register(Photo, PhotoAdmin)

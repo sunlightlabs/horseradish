@@ -16,4 +16,4 @@ class PhotoIndex(indexes.SearchIndex, indexes.Indexable):
         return 'last_updated'
 
     def index_queryset(self, using=None):
-        return Photo.objects.all()
+        return Photo.objects.visible()

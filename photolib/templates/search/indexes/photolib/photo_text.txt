@@ -1,7 +1,8 @@
 {{ object.filename }}
 
-{{ object.tags_str }}
-{{ object.tags_str }}
+{% for tag in object.photo_tags.all %}
+	{{ tag.name }}
+{% endfor %}
 
 {{ object.alt }}
 

@@ -34,6 +34,13 @@ class ImageUpdateView(UpdateView):
     def has_changed(self):
         return True
 
+    def form_valid(self, form):
+        # save object again because indexing of tags
+        # is weird
+        resp = super(ImageUpdateView, self).form_valid(form)
+        self.object.save()
+        return resp
+
 
 class ImageUploadView(CreateView):
     model = Photo

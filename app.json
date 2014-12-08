@@ -9,10 +9,64 @@
     "SECRET_KEY": {
       "description": "A secret key used to provide cryptographic signing.",
       "generator": "secret"
+    },
+    "DEBUG": {
+      "description": "Run app in debug mode, `True` to enable, anything else to disable.",
+      "required": true,
+      "value": "False"
+    },
+    "STATIC_ROOT": {
+      "description": "Path to static media root. Optional.",
+      "required": false
+    },
+    "RAVEN_DSN": {
+      "description": "DSN for Sentry error logging.",
+      "required": false
+    },
+    "ELASTICSEARCH_URL": {
+      "description": "URL for elasticsearch instance."
+    },
+    "ELASTICSEARCH_INDEX": {
+      "description": "elasticsearch index to use."
+    },
+    "AWS_KEY": {
+      "description": "AWS key."
+    },
+    "AWS_SECRET": {
+      "description": "AWS secret key."
+    },
+    "AWS_BUCKET": {
+      "description": "AWS bucket where images will be stored."
+    },
+    "AWS_LOCATION": {
+      "description": "Path within selected bucket. Optional.",
+      "required": false
+    },
+    "GOOGLEAUTH_CLIENT_ID": {
+      "description": "Client ID from Google API Console."
+    },
+    "GOOGLEAUTH_CLIENT_SECRET": {
+      "description": "Client secret from Google API Console."
+    },
+    "GOOGLEAUTH_CALLBACK_DOMAIN": {
+      "description": "The domain that will receive the OAuth callback."
+    },
+    "GOOGLEAUTH_USE_HTTPS": {
+      "description": "`True` to use HTTPS on the callback domain, anything otherwise.",
+      "required": true,
+      "value": "True"
+    },
+    "GOOGLEAUTH_APPS_DOMAIN": {
+      "description": "Limit Google login to accounts with this domain."
+    },
+    "GOOGLEAUTH_IS_STAFF": {
+      "description": "Google logins are staff, must be `True`.",
+      "required": true,
+      "value": "True"
     }
   },
   "addons": [
-    "openredis",
-    "mongolab:shared-single-small"
+    "bonsai",
+    "heroku-postgresql"
   ]
 }

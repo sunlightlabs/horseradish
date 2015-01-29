@@ -28,7 +28,9 @@
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#full-width" data-toggle="tab">Full Width</a></li>
                 <li><a href="#floated" data-toggle="tab">Left or Right</a></li>
-                <li><a href="#splash" data-toggle="tab">Splash</a></li>
+                <li><a href="#splash180" data-toggle="tab">Splash 180</a></li>
+                <li><a href="#splash300" data-toggle="tab">Splash 300</a></li>
+                <li><a href="#splash600" data-toggle="tab">Splash 600</a></li>
             </ul>
 
             <div class="tab-content">
@@ -68,7 +70,7 @@
                     </form>
                     <img src="{{ photo.image_300.url }}" class="the-image">
                 </div>
-                <div class="tab-pane" id="splash">
+                <div class="tab-pane" id="splash180">
                     <form class="form-horizontal" role="form">
                         <div class="form-group">
                             <label for="input-180sq-url" class="col-sm-2 control-label">180px</label>
@@ -85,6 +87,42 @@
                         </div>
                     </form>
                     <img src="{{ photo.image_180sq.url }}" class="the-image">
+                </div>
+                <div class="tab-pane" id="splash300">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label for="input-300sq-url" class="col-sm-2 control-label">300px</label>
+                            <div class="col-sm-10">
+                                <div class="input-group">
+                                    <input id="input-300sq-url" class="form-control focus-select" type="text" value="{{ photo.image_300sq.url }}">
+                                    <span class="input-group-btn">
+                                        <a class="btn btn-default" href="{{ photo.image_300sq.url }}" download="{{ photo.filename }}">
+                                            <span class="glyphicon glyphicon-save"></span>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <img src="{{ photo.image_300sq.url }}" class="the-image">
+                </div>
+                <div class="tab-pane" id="splash600">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label for="input-600-url" class="col-sm-2 control-label">600px</label>
+                            <div class="col-sm-10">
+                                <div class="input-group">
+                                    <input id="input-600-url" class="form-control focus-select" type="text" value="{{ photo.splash_600.url }}">
+                                    <span class="input-group-btn">
+                                        <a class="btn btn-default" href="{{ photo.splash_600.url }}" download="{{ photo.filename }}">
+                                            <span class="glyphicon glyphicon-save"></span>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <img src="{{ photo.splash_600.url }}" class="the-image">
                 </div>
             </div>
         </div>

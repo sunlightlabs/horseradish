@@ -66,7 +66,7 @@ class Photo(models.Model):
                                 processors=[ResizeToFit(300, 3600, upscale=False)],
                                 options={'quality': PHOTO_QUALITY})
     image_800sq = ImageSpecField(source='image',
-                                processors=[ResizeToFill(600, 600)],
+                                processors=[ResizeToFill(800, 800)],
                                 options={'quality': PHOTO_QUALITY})
     image_300sq = ImageSpecField(source='image',
                                 processors=[ResizeToFill(300, 300)],
@@ -76,6 +76,10 @@ class Photo(models.Model):
                                 options={'quality': PHOTO_QUALITY})
     image_thumbnail = ImageSpecField(source='image',
                                 processors=[ResizeToFill(200, 200)],
+                                options={'quality': PHOTO_QUALITY})
+
+    splash_600 = ImageSpecField(source='image',
+                                processors=[ResizeToFill(600, 253)],
                                 options={'quality': PHOTO_QUALITY})
 
     uploaded = models.DateTimeField(default=datetime.datetime.utcnow)

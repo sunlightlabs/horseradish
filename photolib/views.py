@@ -1,22 +1,61 @@
 import json
 from django.conf import settings
+from django.core.files.storage import default_storage
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
+from imagekit import ImageSpec
+from imagekit.cachefiles import ImageCacheFile
+from imagekit.processors import ResizeToFill, ResizeToFit
 from taggit.models import Tag
 
 from photolib.forms import PhotoUpdateForm
 from photolib.models import Photo
 
 PHOTOS_PER_PAGE = getattr(settings, 'PHOTOS_PER_PAGE', 20)
+CROP_STYLES = {
+    'fill': ResizeToFill,
+    'fit': ResizeToFit,
+}
 
+class CropSpec(ImageSpec):
+    format = 'JPEG'
+    options = {'quality': 60}
+
+
+# the view
 
 class ImageDetailView(DetailView):
     model = Photo
     queryset = Photo.objects.visible()
     slug_field = 'uuid'
     slug_url_kwarg = 'uuid'
+
+
+class ImageCropView(DetailView):
+    model = Photo
+    queryset = Photo.objects.visible()
+    slug_field = 'uuid'
+    slug_url_kwarg = 'uuid'
+
+    def get(self, request, *args, **kwargs):
+
+        photo = self.get_object()
+
+        width = int(request.GET.get('w', photo.image.width))
+        height = int(request.GET.get('h', photo.image.height))
+        style = request.GET.get('s', 'fill')
+
+        proc = CROP_STYLES.get(style, ResizeToFill)
+
+        spec = CropSpec(source=photo.image)
+        spec.processors = [proc(width, height)]
+
+        icf = ImageCacheFile(spec)
+        icf.generate()
+
+        return HttpResponseRedirect(icf.url)
 
 
 class ImageListView(ListView):

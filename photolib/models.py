@@ -4,6 +4,7 @@ import uuid
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
+from imagekit import ImageSpec
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill, ResizeToFit
 from taggit.managers import TaggableManager
@@ -12,19 +13,42 @@ PHOTO_SOURCES = settings.PHOTO_SOURCES
 PHOTO_QUALITY = int(getattr(settings, 'PHOTO_QUALITY', 95))
 
 
-# def upload_path(width=None):
-#     def inner(instance, filename):
-#         (name, ext) = instance.filename.rsplit('.', 1)
-#         uuid_path = "%s/%s/%s" % (instance.uuid[:2], instance.uuid[2:4], instance.uuid[4:])
-#         if width:
-#             return u'photos/%s/%s-%d.%s' % (uuid_path, name, width, ext)
-#         return u'photos/%s/%s.%s' % (uuid_path, name, ext)
-#     return inner
-
 def upload_path(instance, filename):
     (name, ext) = instance.filename.rsplit('.', 1)
     uuid_path = "%s/%s/%s" % (instance.uuid[:2], instance.uuid[2:4], instance.uuid[4:])
     return u'photos/%s/%s.%s' % (uuid_path, name, ext)
+
+
+class SizeSpec(ImageSpec):
+    format = 'JPEG'
+    options = {'quality': PHOTO_QUALITY}
+
+
+class Size(models.Model):
+
+    FILL_METHOD = 1
+    FIT_METHOD = 2
+
+    METHOD_CHOICES = (
+        (FILL_METHOD, 'fill'),
+        (FIT_METHOD, 'fit'),
+    )
+
+    name = models.CharField(max_length=128)
+    slug = models.SlugField()
+    width = models.PositiveIntegerField(blank=True, null=True)
+    height = models.PositiveIntegerField(blank=True, null=True)
+    method = models.PositiveIntegerField(choices=METHOD_CHOICES, default=FILL_METHOD)
+
+    class Meta:
+        ordering = ('name',)
+
+    def __unicode__(self):
+        return self.name
+
+    @property
+    def spec(self):
+        s =
 
 
 class PhotoManager(models.Manager):

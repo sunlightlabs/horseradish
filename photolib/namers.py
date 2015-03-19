@@ -21,7 +21,7 @@ def size_aware(generator):
             if processor.width == processor.height:
                 hashy = '%dsq' % processor.width
             else:
-                hashy = '%d' % processor.width
+                hashy = '%dx%d' % (processor.width, processor.height)
 
     ext = suggest_extension(source_filename or '', generator.format)
     return os.path.normpath('%s-%s%s' % (dirname, hashy, ext))
